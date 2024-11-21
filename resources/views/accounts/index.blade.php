@@ -6,10 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CD_LAHLAHVEL</title>
     <style>
+        *,*:before, *:after {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+        header{
+            background: #aaa;
+        }
         .navstyle{
             display: flex;
             justify-content: flex-end;
+            margin: 10px ;
         }
+
          /* Basic styling for the grid layout */
          .container {
             display: grid;
@@ -59,6 +69,25 @@
             border: 1px solid #888;
             width: 50%;
         }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        button a {
+            color: white;
+            text-decoration: none;
+        }
+        .buttons{
+            margin-top: 5%;    
+        }
 
         /* The close button */
         .close {
@@ -77,7 +106,7 @@
 
         .foot{
             text-align: center;
-            margin-top: 10%;
+            margin-top: 2%;
         }
     </style>
 </head>
@@ -85,23 +114,28 @@
     
     <header>
         <h1 class="webname">BIKE CO's STORE</h1>
-        <nav class="navstyle">
+        <div class="navstyle">
             <button id="adminBtn">ADMIN</button>
-        </nav>
-        
-    </header>
-
-    <main>
-
-        <div class="container">
-            @foreach ($account as $accounts)
-                <div class="item">
-                    <!-- Display image with the asset() function to generate the correct URL -->
-                    <img src="{{ asset('storage/' . $accounts->image) }}" alt="{{ $accounts->brand }}">
-                    <h3>{{ $accounts->brand }}</h3>
-                </div>
-            @endforeach
         </div>
+    </header>
+    
+    <main>
+        <section>
+            <div>
+                <img src="" alt="">
+            </div>
+        </section>
+        <section>
+            <div class="container">
+                @foreach ($account as $accounts)
+                    <div class="item">
+                        <!-- Display image with the asset() function to generate the correct URL -->
+                        <img src="{{ asset('storage/' . $accounts->image) }}" alt="{{ $accounts->brand }}">
+                        <h3>{{ $accounts->brand }}</h3>
+                    </div>
+                @endforeach
+            </div>
+        </section>
     </main>
     
     <div id="adminModal" class="modal">
@@ -110,14 +144,19 @@
             <h2>Admin Settings</h2>
             <p>Welcome, Admin! Here you can manage the website settings.</p>
             <!-- Add your admin content here -->
-            <button><a href="{{route('accounts.create')}}">ADD ITEM</a></button>
-            <button><a href="{{route('accounts.view')}}">SHOW ITEM LIST</a></button>
+            <div class="buttons">
+                <button><a href="{{route('accounts.create')}}">ADD ITEM</a></button>
+                <button><a href="{{route('accounts.view')}}">SHOW ITEM LIST</a></button>
+            </div>
+            
         </div>
     </div>
 
     <footer>
+        <h4>Connect with us:</h4>
         <p class="foot">Created by [CUACO, Mark Ian. DELA CRUZ, Vryle Chester]</p>
     </footer>
+
     <script>
         // Get modal element
         var modal = document.getElementById("adminModal");

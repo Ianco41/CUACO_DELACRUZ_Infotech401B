@@ -31,7 +31,7 @@ class accountsCLR extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'brand' => 'required|string|max:255|unique:account',
+            'brand' => 'required|string|max:255|unique:accounts',
             'framesize' => 'required|string|max:255',
             'material' => 'required|string|max:255',
             'ratio' => 'required|string|max:255',
@@ -93,10 +93,15 @@ class accountsCLR extends Controller
             'ratio' => 'required|string|max:255',
             'price' => 'required|integer|min:1',
             'quantity' => 'required|integer|min:1',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10048',
         ]);
         $account = Accounts::findOrFail($id);
 
-        Accounts::create($validate);
+        try{
+            $account->update($validate);
+        } catch(\Exception $e){
+            return back()->withErrors(['CD_database' => 'Brand Name Register Already'.$e->getMessage()]);
+        }
 
         return redirect()->route('accounts.show')->with( 'Success','Item Added Successfully');
 
@@ -107,6 +112,14 @@ class accountsCLR extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $account = accounts::find($id);
+
+    // Check if account exists
+        if ($account) {
+            $account->delete();
+            return redirect()->route('accounts.index')->with('success', 'Item deleted successfully.');
+        } else {
+            return redirect()->route('accounts.index')->with('error', 'Item not found.');
+        }
     }
 }
